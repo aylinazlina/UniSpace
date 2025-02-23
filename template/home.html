@@ -91,7 +91,17 @@
         <input class="me-2 searchfield" type="search" placeholder="Search" aria-label="Search">
         <button class="btn searchBtn" type="submit">Search</button>
 
-        <button class="logINSignUpBtn">Log In/Sign Up</button>
+        
+       <div class="logINSignUpBtn">
+        <a href="{% url 'loginPage' %}" class="logINSignUpBtnText">LogIn/SignUp
+        </a>
+       </div>
+
+
+       
+        <span><a class="logout" href="{% url 'logoutuser' %}">Logout</a></span>
+        <div class="user"> <i class="fa-solid fa-circle-user fa-beat" style="color: #df0c7c;"></i>{{request.user}}</d>
+
       </form>
     </div>
   </nav>

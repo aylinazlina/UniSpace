@@ -88,24 +88,55 @@ br,img,ul,li,ol,div,p,span,section,button{
 
 .logINSignUpBtn{
     background-color: var(--secondary_color);
-    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: none;
-    width: 140px;
+    width: 170px;
     height: 45px;
-    font-family: var(--roboto);
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 18px;
     border-radius: 5px;
     margin-left: 100px;
     cursor: pointer;
     
 }
 
-.logINSignUpBtn:hover{
-    background-color: var(--primary_color);
+.logINSignUpBtnText{
+    color: white;
+    line-height: 18px;
+    
+    font-family: var(--roboto);
+    font-size: 18px;
+    font-weight: 400;
 }
 
+.logINSignUpBtnText:hover{
+    color: white;
+}
+
+.logout{
+    color: var(--primary_color);
+    font-family: var(--roboto);
+    font-weight: 600;
+    font-size: 22px;
+    margin-left: 30px;
+}
+
+.logout:hover{
+    color: var(--secondary_color);
+    
+}
+
+.user{
+    color: var(--secondary_color);
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--roboto);
+    font-size: 18px;
+    font-weight: 600;
+}
 
 /* ============== header ============= */
 
