@@ -175,42 +175,50 @@ br,img,ul,li,ol,div,p,span,section,button{
     border-radius: 5px;
     border: none;
     color: var(--secondary_color);
-    padding:20px;
+    width: 111px;
+    height: 45px;
     font-family: var(--roboto);
     font-size: 18px;
     font-weight: 600;
     line-height: 20px;
     cursor: pointer;
+
+}
+/* =============== navbar ========= */
+
+
+
+/*============  addProfile button ========= */
+
+
+.addButton{
+    width:90px;
+    height:40px;
+    border-radius: 5px;
+    background-color: var(--secondary_color);
     display: flex;
     justify-content: center;
     align-items: center;
-    line-height: 100%;
+    margin-top: 10px;
 
 }
 
-.profileText{
-    color: var(--secondary_color);   
+
+.profile-edit-btn{
+    color:white;
+    font-family: var(--roboto);
 }
 
-
-.profileText:hover{
-    color:var(--secondary_color);
+.profile-edit-btn:hover{
+    color:white
 }
 
-/* =============== navbar ========= */
-
-/* ====================== hero part ========== */
-.heroImage{
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 100vh;
+.userInfo{
+    font-family: var(--roboto);
 }
-/* ====================== hero part ========== */
 
+.userInfoTitle{
+    font-family: var(--roboto);
+}
 
-
-
-
-
+/*============  addProfile button ========= */

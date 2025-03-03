@@ -29,6 +29,10 @@ urlpatterns = [
     path('registration/',u_view.Registration,name='Registration'),
     path('login/',u_view.loginPage,name='loginPage'),
     path('logout/',u_view.logoutuser,name='logoutuser'),
+    path('userProfile/',u_view.userProfile,name='userProfile'),
+    path('profileForm/', u_view.userProfile_add, name='profileForm'),
+    path('profileForm/edit_profile/', u_view.edit_profile, name='edit_profile'),
+    path('rooms/',u_view.rooms,name='rooms')
 ]
 
 urlpatterns +=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

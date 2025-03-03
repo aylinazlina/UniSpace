@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Rooms</title>
     <!-- ============================ google fonts markup ========== -->
 
     <link
@@ -80,7 +80,7 @@
 
     <!-- =================== bootstrap CDN link ============ -->
 
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">   
+    <link rel="stylesheet" href="{% static 'css/Rooms.css' %}">
 </head>
 <body>
 <!-- =================== header markup ================= -->
@@ -91,17 +91,16 @@
         <input class="me-2 searchfield" type="search" placeholder="Search" aria-label="Search">
         <button class="btn searchBtn" type="submit">Search</button>
 
-        
+
        <div class="logINSignUpBtn">
         <a href="{% url 'loginPage' %}" class="logINSignUpBtnText">LogIn/SignUp
         </a>
        </div>
 
 
-       
-        <span><a class="logout" href="{% url 'logoutuser' %}">Logout</a></span>
-        <div class="user"> <i class="fa-solid fa-circle-user fa-beat" style="color: #df0c7c;"></i>{{request.user}}</d>
 
+        <span><a class="logout" href="{% url 'logoutuser' %}">Logout</a></span>
+        <div class="user"> <i class="fa-solid fa-circle-user fa-beat" style="color: #df0c7c;"></i>{{request.user}}</div>
       </form>
     </div>
   </nav>
@@ -125,19 +124,19 @@
           <li class="nav-item">
             <a class="navItem" href="{% url 'rooms' %}">Rooms</a>
           </li>
-         
+
           <li class="nav-item">
             <a class="navItem">Contact Us</a>
           </li>
 
-          
-          
+
+
 
           <li class="nav-item">
             <a class="navItem"><i class="fa-solid fa-comments fa-beat" style="color: #FFD43B;"></i></a>
           </li>
         </ul>
-        
+
       </div>
       <div class="MyProfileBtn">
         <a class="profileText" href="{% url 'userProfile' %}"> My Profile</a>
@@ -149,13 +148,49 @@
 <!-- ================ navbar markup ============ -->
 
 
-<!-- ======================= hero part ============= -->
-<section class="heroPart">
-  <picture>
-    <img src="../static/images/banner.jpg" class="heroImage">
-  </picture>  
-</section>
-<!-- ======================= hero part ============= -->
+<!-- ======================= Rooms part ============= -->
+<section class="ItemsPart">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="ItemsPartTopWrapper mb-5">
+            <h1 class="ItemsPartTop__title">Rooms</h1>
+          </div>
+
+
+
+          <div class="row">
+            {% for rm in r %}
+            <div class="col-lg-3 d-flex justify-content-between">
+              <div class="card CustomCardFull mb-5" style="width: 18rem;">
+
+
+                <img class="img-fluid-100 card-img-top CardImage" src="{{rm.room_pic.url}}" alt="Card image cap">
+
+
+                <div class="card-body CustomeCard">
+
+                  <p class="CustomeCardPrice">{{rm.room_no}}</p>
+                  <p class="CustomeCardName">{{rm.room_name}}</p>
+
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+
+
+
+
+
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+<!-- ======================= Rooms part ============= -->
 
 
 

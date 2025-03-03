@@ -65,3 +65,59 @@ def logoutuser(request):
 
 def home(request):
     return render(request,template_name='home.html')
+
+def rooms(request):
+    ro =Rooms.objects.all()
+    context={
+        'r' :ro,
+    }
+    return render(request,template_name='Rooms.html',context=context)
+
+
+
+
+@login_required(login_url='loginPage')
+def userProfile_add(request):
+
+    if request.method == 'POST':
+        form = userProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.instance.username = request.user.username  # Prefill username
+            form.save()
+            return redirect('userProfile')
+    else:
+        # Prefill the username field with the username of the logged-in user
+        form = userProfileForm(initial={'username': request.user.username})
+
+    context = {
+        'form': form
+    }
+    return render(request,template_name='UserProfileForm.html', context=context)
+
+
+def userProfile(request):
+    try:
+        profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        profile = None
+
+    context = {
+        'profile': profile
+    }
+    return render(request, template_name='UserProfile.html', context=context)
+
+
+def edit_profile(request):
+    profile_instance = request.user.userprofile
+    form = userProfileForm(instance=profile_instance)
+
+    if request.method == 'POST':
+        form = userProfileForm(request.POST, request.FILES, instance=profile_instance)
+        if form.is_valid():
+            form.save()
+            return redirect('userProfile')  # Redirect to the profile page after editing
+
+    context = {
+        'form': form
+    }
+    return render(request, template_name='UserProfileForm.html', context=context)

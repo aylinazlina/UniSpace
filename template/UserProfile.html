@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>My Profile</title>
     <!-- ============================ google fonts markup ========== -->
 
     <link
@@ -80,7 +80,7 @@
 
     <!-- =================== bootstrap CDN link ============ -->
 
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">   
+    <link rel="stylesheet" href="{% static 'css/userProfile.css' %}">
 </head>
 <body>
 <!-- =================== header markup ================= -->
@@ -91,16 +91,16 @@
         <input class="me-2 searchfield" type="search" placeholder="Search" aria-label="Search">
         <button class="btn searchBtn" type="submit">Search</button>
 
-        
+
        <div class="logINSignUpBtn">
         <a href="{% url 'loginPage' %}" class="logINSignUpBtnText">LogIn/SignUp
         </a>
        </div>
 
 
-       
+
         <span><a class="logout" href="{% url 'logoutuser' %}">Logout</a></span>
-        <div class="user"> <i class="fa-solid fa-circle-user fa-beat" style="color: #df0c7c;"></i>{{request.user}}</d>
+        <div class="user"> <i class="fa-solid fa-circle-user fa-beat" style="color: #df0c7c;"></i>{{request.user}}</div>
 
       </form>
     </div>
@@ -120,42 +120,146 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar m-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="navItem" aria-current="page" href="{% url 'home' %}">Home</a>
+            <a class="navItem" aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
-            <a class="navItem" href="{% url 'rooms' %}">Rooms</a>
+            <a class="navItem" href="#">Rooms</a>
           </li>
-         
+
           <li class="nav-item">
             <a class="navItem">Contact Us</a>
           </li>
 
-          
-          
+
+
 
           <li class="nav-item">
             <a class="navItem"><i class="fa-solid fa-comments fa-beat" style="color: #FFD43B;"></i></a>
           </li>
         </ul>
-        
-      </div>
-      <div class="MyProfileBtn">
-        <a class="profileText" href="{% url 'userProfile' %}"> My Profile</a>
 
       </div>
+      <button class="MyProfileBtn">
+        My Profile
+      </button>
     </div>
   </nav>
 
 <!-- ================ navbar markup ============ -->
 
+ <!--=====================================  Profile markup ===================-->
+  <div class="container emp-profile">
+    <form method="post">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="profile-img">
+            <img src="{{ profile.picture.url }}" alt="" />
 
-<!-- ======================= hero part ============= -->
-<section class="heroPart">
-  <picture>
-    <img src="../static/images/banner.jpg" class="heroImage">
-  </picture>  
-</section>
-<!-- ======================= hero part ============= -->
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="profile-head">
+            <h5 class="userInfo">{{ profile.name }}</h5>
+            <br>
+
+
+
+            <div class="col-md-8">
+              <div class="tab-content profile-tab" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="userInfoTitle">Name</label>
+                    </div>
+                    <div class="col-md-6">
+                      <p class="userInfo">{{ profile.name }}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="userInfoTitle">User Name</label>
+                    </div>
+                    <div class="col-md-6">
+                      <p class="userInfo">{{ user.username }}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="userInfoTitle">Email</label>
+                    </div>
+                    <div class="col-md-6">
+                      <p class="userInfo">{{ user.email }}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="userInfoTitle">About Me</label>
+                    </div>
+                    <div class="col-md-6">
+                      <p class="userInfo">{{ profile.about_myself }}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="userInfoTitle">Universtiy ID</label>
+                    </div>
+                    <div class="col-md-6">
+                      <p class="userInfo">{{ profile.u_id }}</p>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="userInfoTitle">Contact Number</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p class="userInfo">{{ profile.contact_no }}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="userInfoTitle">Address</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p class="userInfo">{{ profile.address }}</p>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+        <div class=" col-md-2  ">
+
+          <div class="addButton">
+            <a href="{% url 'profileForm' %}"
+            class="profile-edit-btn">Add Details</a>
+          </div>
+
+            <div class="addButton edit">
+              <a href="{% url 'edit_profile' %}" class="profile-edit-btn">Edit Profile</a>
+            </div>
+
+        </div>
+      </div>
+      
+
+  
+
+  </form>
+  </div>
+
+
+  <!--=====================================  Profile markup ===================-->
+
+
+
 
 
 

@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>User Profile Form</title>
     <!-- ============================ google fonts markup ========== -->
 
     <link
@@ -80,7 +80,7 @@
 
     <!-- =================== bootstrap CDN link ============ -->
 
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">   
+    <link rel="stylesheet" href="{% static 'css/userProfile.css' %}">
 </head>
 <body>
 <!-- =================== header markup ================= -->
@@ -91,14 +91,14 @@
         <input class="me-2 searchfield" type="search" placeholder="Search" aria-label="Search">
         <button class="btn searchBtn" type="submit">Search</button>
 
-        
+
        <div class="logINSignUpBtn">
         <a href="{% url 'loginPage' %}" class="logINSignUpBtnText">LogIn/SignUp
         </a>
        </div>
 
 
-       
+
         <span><a class="logout" href="{% url 'logoutuser' %}">Logout</a></span>
         <div class="user"> <i class="fa-solid fa-circle-user fa-beat" style="color: #df0c7c;"></i>{{request.user}}</d>
 
@@ -120,42 +120,86 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar m-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="navItem" aria-current="page" href="{% url 'home' %}">Home</a>
+            <a class="navItem" aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
-            <a class="navItem" href="{% url 'rooms' %}">Rooms</a>
+            <a class="navItem" href="#">Rooms</a>
           </li>
-         
+
           <li class="nav-item">
             <a class="navItem">Contact Us</a>
           </li>
 
-          
-          
+
+
 
           <li class="nav-item">
             <a class="navItem"><i class="fa-solid fa-comments fa-beat" style="color: #FFD43B;"></i></a>
           </li>
         </ul>
-        
-      </div>
-      <div class="MyProfileBtn">
-        <a class="profileText" href="{% url 'userProfile' %}"> My Profile</a>
 
       </div>
+      <button class="MyProfileBtn">
+        My Profile
+      </button>
     </div>
   </nav>
 
 <!-- ================ navbar markup ============ -->
 
+<!-- ============================ Form part  ============ -->
+  <section class="ItemsPart">
+    <div class="container">
 
-<!-- ======================= hero part ============= -->
-<section class="heroPart">
-  <picture>
-    <img src="../static/images/banner.jpg" class="heroImage">
-  </picture>  
-</section>
-<!-- ======================= hero part ============= -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="ItemsPartTopWrapper mb-5">
+            <h1 class="ItemsPartTop__title">User Profile</h1>
+          </div>
+
+
+
+          <div class="row">
+
+            <div class="col-lg-3 d-flex justify-content-between">
+              <div class="card CustomCardFull mb-5" style="width: 18rem;">
+
+
+                <img class="img-fluid-100 card-img-top CardImage" src="{{request.user.customer.user_profile_pic}}" alt="Card image cap">
+
+
+                <div class="card-body CustomeCard">
+
+                    <form method="Post" action="" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      {{form.as_p}}
+                        <input class="btn btn-primary" type="submit">
+
+                    </form>
+
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+
+
+
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+
+  <!-- ============================ Form part ============ -->
+
+
+
 
 
 
