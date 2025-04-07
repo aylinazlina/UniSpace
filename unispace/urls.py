@@ -32,7 +32,13 @@ urlpatterns = [
     path('userProfile/',u_view.userProfile,name='userProfile'),
     path('profileForm/', u_view.userProfile_add, name='profileForm'),
     path('profileForm/edit_profile/', u_view.edit_profile, name='edit_profile'),
-    path('rooms/',u_view.rooms,name='rooms')
+    path('rooms/',u_view.rooms,name='rooms'),
+    path('<str:pk>', u_view.roomDetails, name='roomDetails'),
+    path('routine/<str:pk>/', u_view.routine, name='routine'),
+    path('createRoom/', u_view.createRoom, name='createRoom'),
+    path('updateRoom/<str:pk>',u_view.updateRoom,name='updateRoom'),
+    path('deleteRoom/<str:pk>',u_view.deleteRoom,name='deleteRoom'),
+
 ]
 
 urlpatterns +=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

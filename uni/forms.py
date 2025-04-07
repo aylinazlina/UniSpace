@@ -17,3 +17,9 @@ class userProfileForm(ModelForm):
     class Meta:
         model=UserProfile
         fields = '__all__'
+
+
+class RoomsForm(ModelForm):
+    class Meta:
+        model = Rooms
+        fields = '__all__'

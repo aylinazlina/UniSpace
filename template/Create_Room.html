@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Create</title>
     <!-- ============================ google fonts markup ========== -->
 
     <link
@@ -80,7 +80,7 @@
 
     <!-- =================== bootstrap CDN link ============ -->
 
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">   
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
 <!-- =================== header markup ================= -->
@@ -91,14 +91,14 @@
         <input class="me-2 searchfield" type="search" placeholder="Search" aria-label="Search">
         <button class="btn searchBtn" type="submit">Search</button>
 
-        
+
        <div class="logINSignUpBtn">
         <a href="{% url 'loginPage' %}" class="logINSignUpBtnText">LogIn/SignUp
         </a>
        </div>
 
 
-       
+
         <span><a class="logout" href="{% url 'logoutuser' %}">Logout</a></span>
         <div class="user"> <i class="fa-solid fa-circle-user fa-beat" style="color: #df0c7c;"></i>{{request.user}}</d>
 
@@ -125,19 +125,19 @@
           <li class="nav-item">
             <a class="navItem" href="{% url 'rooms' %}">Rooms</a>
           </li>
-         
+
           <li class="nav-item">
             <a class="navItem">Contact Us</a>
           </li>
 
-          
-          
+
+
 
           <li class="nav-item">
             <a class="navItem"><i class="fa-solid fa-comments fa-beat" style="color: #FFD43B;"></i></a>
           </li>
         </ul>
-        
+
       </div>
       <div class="MyProfileBtn">
         <a class="profileText" href="{% url 'userProfile' %}"> My Profile</a>
@@ -150,17 +150,18 @@
 
 
 <!-- ======================= hero part ============= -->
-<section class="heroPart position-relative">
-  <picture>
-    <img src="../static/images/banner.jpg" class="heroImage w-100">
-  </picture>
+ <form action="" method="POST" enctype="multipart/form-data">
 
-  <div class="heroOverlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center">
-    <h1 class="heroTitle">Welcome to UniSpace</h1>
-    <p class="heroSubtitle">Your comfort, our priority. Discover the best rooms tailored for your peace of mind.</p>
-    <a href="{% url 'rooms' %}" class="btn btn-primary px-4 py-2 rounded-pill mt-3">Explore Rooms</a>
-  </div>
-</section>
+
+        {% csrf_token %}
+        {{form}}
+
+        <input type="submit" name="Submit">
+
+
+
+
+    </form>
 
 <!-- ======================= hero part ============= -->
 

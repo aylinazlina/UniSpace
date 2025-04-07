@@ -66,12 +66,30 @@ def logoutuser(request):
 def home(request):
     return render(request,template_name='home.html')
 
+
 def rooms(request):
-    ro =Rooms.objects.all()
-    context={
-        'r' :ro,
+    ro = Rooms.objects.all()
+    context ={
+        'r':  ro,
     }
     return render(request,template_name='Rooms.html',context=context)
+
+def roomDetails(request, pk):
+    rDet = Rooms.objects.get(id=pk)
+    context ={
+        'rDetails':  rDet,
+    }
+    return render(request,template_name='Room_Details.html',context=context)
+
+
+def routine(request, pk):
+
+    routines = Routine.objects.filter(room__id=pk).order_by('day', 'start_time')
+    context = {
+        'rn': routines,
+    }
+    return render(request,   template_name ='Routine.html', context=context)
+
 
 
 
@@ -121,3 +139,42 @@ def edit_profile(request):
         'form': form
     }
     return render(request, template_name='UserProfileForm.html', context=context)
+
+
+
+def createRoom(request):
+    form = RoomsForm()
+    if request.method == 'POST':
+        form =RoomsForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('rooms')
+    context ={
+        'form': form,
+    }
+    return render(request,template_name='Create_Room.html',context=context)
+
+
+def updateRoom(request,pk):
+    update =Rooms.objects.get(id=pk)
+    form = RoomsForm(instance=update)
+    if request.method == 'POST':
+        form =RoomsForm(request.POST,request.FILES,instance=update)
+        if form.is_valid():
+            form.save()
+            return redirect('rooms')
+    context = {
+        'form': form,
+    }
+    return render(request, template_name='Create_Room.html', context=context)
+
+
+def deleteRoom(request,pk):
+    delete = Rooms.objects.get(id=pk)
+    if request.method == "POST":
+        delete.delete()
+        return redirect('rooms')
+    context = {
+        'r': delete,
+    }
+    return render(request, template_name='Delete.html', context=context)

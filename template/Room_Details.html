@@ -1,0 +1,303 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>RoomDetails</title>
+
+  <style>
+    /* ========================ItemsPart============= */
+
+    :root {
+      --blue_color: #1A7EF2;
+      --white_color: #FFFFFF;
+      --mejenta_color: #DA14AE;
+      --grey_color: rgb(89, 89, 89);
+      --black_color: #000000;
+      --popins: "Poppins", sans-serif;
+
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+    .MyProfile{
+      color: var(--white_color);
+      font-family: var(--popins);
+    }
+    .MyProfileButton{
+      width: 100px;
+      height: 38px;
+      background-color:#DE73EF;
+
+      border: none;
+      border-radius: 5px;
+    }
+
+
+    .ItemsPart {
+      background-color: var(--white_color);
+      padding: 100px 0;
+    }
+
+    .ItemsPartTop__title {
+      color: var(--mejenta_color);
+      font-size: 60px;
+      font-weight: 700;
+      line-height: 77px;
+      font-family: var(--popins);
+    }
+
+    .ItemsPartTopWrapper {
+      position: relative;
+    }
+
+    .ItemsPartTopWrapper::after {
+      position: absolute;
+      content: "";
+      width: 250px;
+      height: 2px;
+      background-color: #1A7EF2;
+      padding-bottom: 20px;
+
+    }
+
+    .CartButton {
+      width: 180px;
+      height: 38px;
+      background-color: red;
+      color: var(--white_color);
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 20px;
+      font-family: var(--popins);
+
+    }
+
+    .Details {
+      width: 80px;
+      height: 38px;
+      background-color: var(--mejenta_color);
+      color: var(--white_color);
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 20px;
+      font-family: var(--popins);
+    }
+
+    .ItemDetailsbottomRight__name {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 22px;
+      font-family: var(--popins);
+      color: var(--black_color);
+      padding-bottom: 10px;
+    }
+
+    .ItemDetailsbottomRight__description {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 20px;
+      font-family: var(--popins);
+      color: var(--grey_color);
+      padding-bottom: 10px;
+    }
+
+    .ItemDetailsbottomRight__price {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 20px;
+      font-family: var(--popins);
+      color: var(--mejenta_color);
+      padding-bottom: 4px;
+    }
+
+    .ItemDetailsbottomRight__category {
+
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 20px;
+      font-family: var(--popins);
+      color: var(--grey_color);
+      padding-bottom: 4px;
+
+    }
+
+    .ItemDetailsbottomRight__stock {
+
+
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 20px;
+      font-family: var(--popins);
+      color: var(--grey_color);
+      padding-bottom: 4px;
+
+    }
+
+    span {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 20px;
+      font-family: var(--popins);
+      color: var(--black_color);
+      padding-bottom: 4px;
+    }
+
+
+    .logout {
+      color: var(--white_color);
+      font-family: var(--popins);
+    }
+
+    /* ========================ItemsPart============= */
+  </style>
+
+
+
+
+  <!-- =================== Google fonts CDN Link ===== -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <!-- =================== Google fonts CDN Link ===== -->
+
+
+  <!-- ========= fontawesome ===============-->
+  <link rel="stylesheet" data-purpose="Layout StyleSheet" title="Web Awesome"
+    href="/css/app-wa-3b124ff0e0d7a67cd8c995d0aeb1d15a.css?vsn=d">
+
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css">
+
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-duotone-solid.css">
+
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-thin.css">
+
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-solid.css">
+
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-regular.css">
+
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-light.css">
+
+  <!-- ===================== bootstrap CDN Link ======= -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- ===================== bootstrap CDN Link ======= -->
+  <!-- ========= fontawesome ===============-->
+
+
+  {% load static %}
+
+<link rel="stylesheet" href="{% static 'css/home.css' %}?v=1.0">
+
+
+</head>
+
+<body>
+
+  <!-- ======================= Navbar ============= -->
+<nav class="navbar navbar-expand-lg ">
+    <div class="container-fluid">
+        <picture>
+            <img src="../static/images/logo_2.png" alt="logo" class="logo">
+        </picture>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar m-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="navItem" aria-current="page" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="navItem" href="{% url 'rooms' %}">Rooms</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="navItem">Contact Us</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="navItem"><i class="fa-solid fa-comments fa-beat" style="color: #FFD43B;"></i></a>
+                </li>
+            </ul>
+
+        </div>
+        <div class="MyProfileBtn">
+            <a class="profileText" href="{% url 'userProfile' %}"> My Profile</a>
+
+        </div>
+    </div>
+</nav>
+
+  <!-- ======================= Navbar ============= -->
+
+  <!-- ============================ Items Part ============ -->
+  <section class="ItemsPart py-5">
+  <div class="container">
+
+    <div class="row mb-4">
+      <div class="col-lg-12 text-center">
+        <div class="ItemsPartTopWrapper mb-3">
+          <h1 class="ItemsPartTop__title">Room no: #{{rDetails.room_no}}</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-lg-5 mb-4 mb-lg-0">
+        <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+          <picture>
+            <img src="{{rDetails.room_pic.url}}" class="img-fluid w-100 h-100 object-fit-cover" alt="Room image">
+          </picture>
+        </div>
+      </div>
+
+      <div class="col-lg-7">
+        <div class="p-4 rounded-4 shadow-lg bg-white">
+          <h2 class="fw-bold mb-3 text-uppercase" style="color: #DA14AE;">{{rDetails.room_type}}</h2>
+          <p class="text-muted mb-4">{{rDetails.room_description}}</p>
+
+          <div class="mb-2"><strong>Category:</strong> {{rDetails.room_category}}</div>
+          <div class="mb-2"><strong>Capacity:</strong> {{rDetails.room_capacity}}</div>
+          <div class="mb-4"><strong>Building Name:</strong> {{rDetails.building_name}}</div>
+
+          <a href="{% url 'routine' rDetails.id %}">
+  <button class="btn btn-gradient-purple shadow-sm px-4 py-2 rounded-pill fw-semibold">
+    <i class="fa-regular fa-calendar-days me-2"></i> View Routine
+  </button>
+</a>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+  <!-- ============================ Items ============ -->
+
+
+  <!-- ====================== footer ============== -->
+
+  <!-- ====================== footer ============== -->
+
+
+  <!-- ===================== bootstrap CDN Link ======= -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+  <!-- ===================== bootstrap CDN Link ======= -->
+  <script src="{% static 'js/cart.js' %}"></script>
+</body>
+
+</html>
