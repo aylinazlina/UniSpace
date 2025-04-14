@@ -221,4 +221,12 @@ br,img,ul,li,ol,div,p,span,section,button{
     font-family: var(--roboto);
 }
 
+.profile_pic{
+
+ max-width:100px !important;
+ max-height:100px !important;
+
+}
+
+
 /*============  addProfile button ========= */

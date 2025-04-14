@@ -68,11 +68,20 @@ def home(request):
 
 
 def rooms(request):
-    ro = Rooms.objects.all()
-    context ={
-        'r':  ro,
+    query = request.GET.get('q')  # Get the search term from the query string
+    if query:
+        ro = Rooms.objects.filter(room_no__icontains=query)
+    else:
+        ro = Rooms.objects.all()
+
+    context = {
+        'r': ro,
     }
-    return render(request,template_name='Rooms.html',context=context)
+    return render(request, 'Rooms.html', context=context)
+
+
+
+
 
 def roomDetails(request, pk):
     rDet = Rooms.objects.get(id=pk)

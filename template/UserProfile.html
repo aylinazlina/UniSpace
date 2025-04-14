@@ -87,24 +87,22 @@
 
 <nav class="header">
     <div class="container">
-      <form class="d-flex" role="search">
-        <input class="me-2 searchfield" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn searchBtn" type="submit">Search</button>
+        <form method="GET" action="{% url 'rooms' %}" class="d-flex" role="search">
+            <input class="me-2 searchfield" type="search" name="q" placeholder="Search by Room No"
+                   value="{{ request.GET.q }}" aria-label="Search">
+            <button class="btn searchBtn" type="submit">Search</button>
 
+            <div class="logINSignUpBtn">
+                <a href="{% url 'loginPage' %}" class="logINSignUpBtnText">LogIn/SignUp</a>
+            </div>
 
-       <div class="logINSignUpBtn">
-        <a href="{% url 'loginPage' %}" class="logINSignUpBtnText">LogIn/SignUp
-        </a>
-       </div>
-
-
-
-        <span><a class="logout" href="{% url 'logoutuser' %}">Logout</a></span>
-        <div class="user"> <i class="fa-solid fa-circle-user fa-beat" style="color: #df0c7c;"></i>{{request.user}}</div>
-
-      </form>
+            <span><a class="logout" href="{% url 'logoutuser' %}">Logout</a></span>
+            <div class="user">
+                <i class="fa-solid fa-circle-user fa-beat" style="color: #df0c7c;"></i>{{ request.user }}
+            </div>
+        </form>
     </div>
-  </nav>
+</nav>
 <!-- =================== header markup ================= -->
 
 <!-- ================ navbar markup ============ -->
@@ -119,11 +117,11 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar m-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="navItem" aria-current="page" href="#">Home</a>
+           <li class="nav-item">
+            <a class="navItem" aria-current="page" href="{% url 'home' %}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="navItem" href="#">Rooms</a>
+            <a class="navItem" href="{% url 'rooms' %}">Rooms</a>
           </li>
 
           <li class="nav-item">
@@ -153,7 +151,7 @@
       <div class="row">
         <div class="col-md-4">
           <div class="profile-img">
-            <img src="{{ profile.picture.url }}" alt="" />
+            <img src="{{ profile.picture.url }}" alt="" class="profile_pic"/>
 
           </div>
         </div>

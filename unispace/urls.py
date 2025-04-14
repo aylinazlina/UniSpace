@@ -39,6 +39,7 @@ urlpatterns = [
     path('updateRoom/<str:pk>',u_view.updateRoom,name='updateRoom'),
     path('deleteRoom/<str:pk>',u_view.deleteRoom,name='deleteRoom'),
 
+
 ]
 
 urlpatterns +=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
