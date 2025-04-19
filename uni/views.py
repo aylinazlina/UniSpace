@@ -13,6 +13,9 @@ from django.contrib.auth.models import Group
 
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+
+
+
 # Create your views here.
 
 @unauthenticated_user
@@ -187,3 +190,9 @@ def deleteRoom(request,pk):
         'r': delete,
     }
     return render(request, template_name='Delete.html', context=context)
+
+
+def chat_page(request):
+    return render(request, 'chat.html')
+
+

@@ -15,31 +15,32 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from uni import views as u_view
+from django.urls import path, include
 
+from uni import views as u_view
 
 from django.conf.urls.static import static
 from django.conf import settings
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',u_view.home,name='home'),
-    path('registration/',u_view.Registration,name='Registration'),
-    path('login/',u_view.loginPage,name='loginPage'),
-    path('logout/',u_view.logoutuser,name='logoutuser'),
-    path('userProfile/',u_view.userProfile,name='userProfile'),
+    path('', u_view.home, name='home'),
+    path('registration/', u_view.Registration, name='Registration'),
+    path('login/', u_view.loginPage, name='loginPage'),
+    path('logout/', u_view.logoutuser, name='logoutuser'),
+    path('userProfile/', u_view.userProfile, name='userProfile'),
     path('profileForm/', u_view.userProfile_add, name='profileForm'),
     path('profileForm/edit_profile/', u_view.edit_profile, name='edit_profile'),
-    path('rooms/',u_view.rooms,name='rooms'),
+    path('rooms/', u_view.rooms, name='rooms'),
     path('<str:pk>', u_view.roomDetails, name='roomDetails'),
     path('routine/<str:pk>/', u_view.routine, name='routine'),
     path('createRoom/', u_view.createRoom, name='createRoom'),
-    path('updateRoom/<str:pk>',u_view.updateRoom,name='updateRoom'),
-    path('deleteRoom/<str:pk>',u_view.deleteRoom,name='deleteRoom'),
+    path('updateRoom/<str:pk>', u_view.updateRoom, name='updateRoom'),
+    path('deleteRoom/<str:pk>', u_view.deleteRoom, name='deleteRoom'),
+    path('api/', include('chatbot.urls')),
+    path('chat/', u_view.chat_page, name='chat_page'),
 
 
 ]
 
-urlpatterns +=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
