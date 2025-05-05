@@ -1,0 +1,195 @@
+/* rooms.css - Styling for the Rooms component */
+
+/* Page Layout */
+.page-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.page-title h1 {
+  color: #2a3f5f;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.page-title p {
+  color: #666;
+  font-size: 1rem;
+}
+
+/* Container for all room cards */
+.rooms-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+/* Individual Room Card */
+.room-card {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.room-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Room Image Container */
+.room-image-container {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.room-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.room-card:hover .room-img {
+  transform: scale(1.05);
+}
+
+/* Room Type Badge */
+.room-type-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: rgba(42, 63, 95, 0.85);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Room Information Section */
+.room-info {
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.room-number {
+  color: #2a3f5f;
+  margin: 0 0 1rem 0;
+  font-size: 1.3rem;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 0.75rem;
+}
+
+/* Room Details */
+.room-details {
+  flex-grow: 1;
+  margin-bottom: 1.25rem;
+}
+
+.detail-item {
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+}
+
+.detail-label {
+  color: #666;
+  font-weight: 600;
+}
+
+.detail-value {
+  color: #333;
+  text-align: right;
+}
+
+/* Button Styling */
+.view-details-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-align: center;
+  width: 100%;
+}
+
+.view-details-btn:hover {
+  background-color: #2980b9;
+}
+
+/* Loading State */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.loader {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error State */
+.error-container {
+  background-color: #ffeeee;
+  color: #d63031;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  margin: 2rem auto;
+  max-width: 500px;
+}
+
+/* No Rooms State */
+.no-rooms-container {
+  text-align: center;
+  padding: 3rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  color: #6c757d;
+  font-size: 1.2rem;
+  margin: 2rem auto;
+  max-width: 500px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .rooms-container {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .page-container {
+    padding: 1rem;
+  }
+}

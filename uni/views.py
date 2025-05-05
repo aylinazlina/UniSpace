@@ -1,198 +1,136 @@
-from django.shortcuts import render,redirect,get_object_or_404
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
-
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from .models import *
-from .forms import *
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
+from .serializers import *
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework import status
+from rest_framework.generics import RetrieveAPIView
+from rest_framework import serializers
+from rest_framework import viewsets
+
+from django.contrib.auth import authenticate, login
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json
-from .decorators import unauthenticated_user
-from django.contrib.auth.models import Group
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
-from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.decorators import login_required
+from rest_framework.response import Response
+from .models import Rooms
+from .serializers import RoomSerializer
+from rest_framework import generics, status
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.decorators import api_view, permission_classes
 
 
 
-# Create your views here.
+from django.contrib.auth.models import User
 
-@unauthenticated_user
-def Registration(request):
 
-    form = CreateUserForm()
 
+
+
+
+class RegisterView(APIView):
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            # Return login URL in the response for frontend redirection
+            return Response({
+                'message': 'User created successfully',
+                'redirect': '/login/'  # Frontend can use this to redirect
+            }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@csrf_exempt  # Only use this for development. Use proper CSRF handling later.
+def login_view(request):
     if request.method == 'POST':
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            username = form.cleaned_data.get('username')
+        try:
+            data = json.loads(request.body)
+            username = data.get('username')
+            password = data.get('password')
 
-            messages.success(request, "Account was created for " + username)
-            return redirect('loginPage')
-
-    context = {
-        'form': form,
-    }
-    return render(request, template_name='Registration.html', context=context)
-
-
-
-@unauthenticated_user
-def loginPage(request):
-
-    if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect('home')
-        else:
-            messages.info(request, "username or password incorrect")
-
-    context = {
-
-    }
-    return render(request, template_name='login.html', context=context)
-
-
-def logoutuser(request):
-    logout(request)
-    return redirect('loginPage')
-
-
-
-def home(request):
-    return render(request,template_name='home.html')
-
-
-def rooms(request):
-    query = request.GET.get('q')  # Get the search term from the query string
-    if query:
-        ro = Rooms.objects.filter(room_no__icontains=query)
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return JsonResponse({'message': 'Login successful'}, status=200)
+            else:
+                return JsonResponse({'message': 'Invalid credentials'}, status=401)
+        except Exception as e:
+            return JsonResponse({'message': str(e)}, status=500)
     else:
-        ro = Rooms.objects.all()
+        return JsonResponse({'message': 'Method not allowed'}, status=405)
 
-    context = {
-        'r': ro,
-    }
-    return render(request, 'Rooms.html', context=context)
-
-
-
+class RoomListView(APIView):
+    def get(self, request):
+        rooms = Rooms.objects.all()
+        serializer = RoomSerializer(rooms, many=True)
+        return Response(serializer.data)
 
 
-def roomDetails(request, pk):
-    rDet = Rooms.objects.get(id=pk)
-    context ={
-        'rDetails':  rDet,
-    }
-    return render(request,template_name='Room_Details.html',context=context)
-
-
-def routine(request, pk):
-
-    routines = Routine.objects.filter(room__id=pk).order_by('day', 'start_time')
-    context = {
-        'rn': routines,
-    }
-    return render(request,   template_name ='Routine.html', context=context)
+# views.py
 
 
 
+class RoomListView(APIView):
+    """
+    API view to get all rooms
+    """
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        rooms = Rooms.objects.all()
+        serializer = RoomSerializer(rooms, many=True)
+        return Response(serializer.data)
 
 
-@login_required(login_url='loginPage')
-def userProfile_add(request):
+@api_view(['GET'])
+def search_rooms(request):
+    room_no = request.GET.get('q', None)
 
-    if request.method == 'POST':
-        form = userProfileForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.instance.username = request.user.username  # Prefill username
-            form.save()
-            return redirect('userProfile')
-    else:
-        # Prefill the username field with the username of the logged-in user
-        form = userProfileForm(initial={'username': request.user.username})
+    if room_no:
+        try:
+            room_no_int = int(room_no)
+            rooms = Rooms.objects.filter(room_no=room_no_int)
 
-    context = {
-        'form': form
-    }
-    return render(request,template_name='UserProfileForm.html', context=context)
+            if not rooms.exists():
+                return Response({'message': f'No rooms found with number {room_no}'}, status=404)
 
+            serializer = RoomSerializer(rooms, many=True)
+            return Response(serializer.data)
 
-def userProfile(request):
-    try:
-        profile = UserProfile.objects.get(user=request.user)
-    except UserProfile.DoesNotExist:
-        profile = None
+        except ValueError:
+            return Response({'message': 'Please enter a valid room number'}, status=400)
 
-    context = {
-        'profile': profile
-    }
-    return render(request, template_name='UserProfile.html', context=context)
+    return Response({'message': 'No search query provided'}, status=400)
 
 
-def edit_profile(request):
-    profile_instance = request.user.userprofile
-    form = userProfileForm(instance=profile_instance)
+class RoomDetailAPIView(RetrieveAPIView):
+    queryset = Rooms.objects.all()
+    serializer_class = RoomSerializer
+    lookup_field = 'id'
 
-    if request.method == 'POST':
-        form = userProfileForm(request.POST, request.FILES, instance=profile_instance)
-        if form.is_valid():
-            form.save()
-            return redirect('userProfile')  # Redirect to the profile page after editing
+@method_decorator(csrf_exempt, name='dispatch')
+class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
 
-    context = {
-        'form': form
-    }
-    return render(request, template_name='UserProfileForm.html', context=context)
+    def put(self, request):
+        profile = request.user.userprofile
+        data = request.data
 
+        print("Received PUT data:", data)  # Debug log
 
-
-def createRoom(request):
-    form = RoomsForm()
-    if request.method == 'POST':
-        form =RoomsForm(request.POST,request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('rooms')
-    context ={
-        'form': form,
-    }
-    return render(request,template_name='Create_Room.html',context=context)
+        profile.name = data.get('name', profile.name)
+        profile.address = data.get('address', profile.address)
+        profile.contact_no = data.get('contact_no', profile.contact_no)  # Fix this line
+        profile.about_myself = data.get('about_myself', profile.about_myself)  # Fix this line
+        profile.save()
+        return Response({"message": "Profile updated successfully"})
 
 
-def updateRoom(request,pk):
-    update =Rooms.objects.get(id=pk)
-    form = RoomsForm(instance=update)
-    if request.method == 'POST':
-        form =RoomsForm(request.POST,request.FILES,instance=update)
-        if form.is_valid():
-            form.save()
-            return redirect('rooms')
-    context = {
-        'form': form,
-    }
-    return render(request, template_name='Create_Room.html', context=context)
-
-
-def deleteRoom(request,pk):
-    delete = Rooms.objects.get(id=pk)
-    if request.method == "POST":
-        delete.delete()
-        return redirect('rooms')
-    context = {
-        'r': delete,
-    }
-    return render(request, template_name='Delete.html', context=context)
-
-
-def chat_page(request):
-    return render(request, 'chat.html')
-
-
+class BookingViewSet(viewsets.ModelViewSet):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer

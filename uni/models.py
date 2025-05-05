@@ -42,6 +42,19 @@ class Rooms(models.Model):
         return self.room_type
 
 
+
+class Booking(models.Model):
+    room = models.ForeignKey(Rooms, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    purpose = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return f"{self.room} booked by {self.user} on {self.date} from {self.start_time} to {self.end_time}"
+
+
 class Routine(models.Model):
     DAYS = [
         ('Monday', 'Monday'),

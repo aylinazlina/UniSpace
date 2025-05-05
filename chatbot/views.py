@@ -1,20 +1,18 @@
-from django.shortcuts import render
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
+# chatbot/views.py
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
 from .logic import get_bot_reply
 
-
-# Create your chatbot views here.
-@csrf_exempt
+@api_view(['POST'])
 def chat_api(request):
-    if request.method == "POST":
-        data = json.loads(request.body)
-        user_message = data.get("message", "")
+    try:
+        user_message = request.data.get('message')
         if not user_message:
-            return JsonResponse({"error": "No message provided."}, status=400)
+            return Response({"error": "Message is required"}, status=status.HTTP_400_BAD_REQUEST)
 
         reply = get_bot_reply(user_message)
-        return JsonResponse({"reply": reply})
-    else:
-        return JsonResponse({"error": "POST request required."}, status=405)
+        return Response({"reply": reply})
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
