@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './rooms.css'; // We'll use this for our custom styles
+import './Rooms.css'; // We'll use this for our custom styles
 import { Link } from 'react-router-dom';
 
 const Rooms = () => {
