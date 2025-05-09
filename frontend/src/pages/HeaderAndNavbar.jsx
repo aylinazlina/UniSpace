@@ -212,6 +212,8 @@ const HeaderAndNavbar = () => {
             <Link className="profileText" to="/profile">
               <i className="fa-solid fa-user-circle"></i> My Profile
             </Link>
+
+
           </div>
         </div>
       </nav>

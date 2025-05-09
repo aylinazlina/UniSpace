@@ -3,10 +3,15 @@ from rest_framework.response import Response
 from .models import *
 from .serializers import *
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.decorators import api_view, permission_classes, parser_classes
+
+
+
 from rest_framework import status
 from rest_framework.generics import RetrieveAPIView
 from rest_framework import serializers
 from rest_framework import viewsets
+from django.shortcuts import get_object_or_404
 
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
@@ -113,24 +118,64 @@ class RoomDetailAPIView(RetrieveAPIView):
     serializer_class = RoomSerializer
     lookup_field = 'id'
 
-@method_decorator(csrf_exempt, name='dispatch')
-class ProfileView(APIView):
-    permission_classes = [IsAuthenticated]
 
-    def put(self, request):
-        profile = request.user.userprofile
-        data = request.data
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+@parser_classes([MultiPartParser, FormParser])
+def user_profile(request):
+    user = request.user
 
-        print("Received PUT data:", data)  # Debug log
+    try:
+        profile = UserProfile.objects.get(user=user)
+    except UserProfile.DoesNotExist:
+        profile = None
 
-        profile.name = data.get('name', profile.name)
-        profile.address = data.get('address', profile.address)
-        profile.contact_no = data.get('contact_no', profile.contact_no)  # Fix this line
-        profile.about_myself = data.get('about_myself', profile.about_myself)  # Fix this line
-        profile.save()
-        return Response({"message": "Profile updated successfully"})
+    if request.method == 'GET':
+        if profile:
+            serializer = UserProfileSerializer(profile)
+            return Response(serializer.data)
+        else:
+            return Response({"detail": "Profile not found."}, status=404)
+
+    elif request.method == 'POST':
+        if profile:
+            # Update existing profile
+            serializer = UserProfileSerializer(profile, data=request.data, partial=True)
+        else:
+            # Create new profile, manually set the user
+            serializer = UserProfileSerializer(data=request.data)
+
+        if serializer.is_valid():
+            if not profile:
+                serializer.save(user=user)  # manually attach user
+            else:
+                serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
+
+
+class RoomRoutineView(APIView):
+    """API View to get routines for a specific room"""
+
+    def get(self, request, room_id):
+        try:
+            room = Rooms.objects.get(id=room_id)
+            routines = Routine.objects.filter(room=room).order_by('day', 'start_time')
+            serializer = RoutineSerializer(routines, many=True)
+            return Response(serializer.data)
+        except Rooms.DoesNotExist:
+            return Response(
+                {"error": "Room not found"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+
+

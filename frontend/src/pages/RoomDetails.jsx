@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 import './RoomDetails.css';
 import BookingForm from './BookingForm';
 
@@ -8,6 +10,8 @@ const RoomDetails = () => {
   const [room, setRoom] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchRoom = async () => {
@@ -101,6 +105,12 @@ const RoomDetails = () => {
                 <p className="description-text">{room.room_description}</p>
               </div>
             )}
+
+                <div>
+      {/* Existing room details */}
+      <button onClick={() => navigate(`/routine/${id}`)}>View Routine</button>
+    </div>
+
           </div>
 
           <div className="booking-section">

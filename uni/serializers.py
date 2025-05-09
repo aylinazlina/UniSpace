@@ -37,11 +37,11 @@ class RegisterSerializer(serializers.ModelSerializer):
             print(f"Error creating user: {str(e)}")
             raise serializers.ValidationError(f"Failed to create user: {str(e)}")
 
-
-class ProfileSerializer(serializers.ModelSerializer):
+class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = '__all__'
+        fields = ['name', 'u_id', 'picture', 'about_myself', 'address', 'contact_no']
+
 
 
 class RoomSerializer(serializers.ModelSerializer):
@@ -67,4 +67,12 @@ class BookingSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class RoutineSerializer(serializers.ModelSerializer):
+    day_display = serializers.CharField(source='get_day_display', read_only=True)
+    room_number = serializers.CharField(source='room.room_no', read_only=True)
+
+    class Meta:
+        model = Routine
+        fields = ['id', 'room', 'room_number', 'day', 'day_display', 'start_time',
+                  'end_time', 'subject_or_purpose']
 

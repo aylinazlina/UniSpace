@@ -25,8 +25,9 @@ const LoginPage = () => {
       const data = await res.json();
 
       if (res.ok) {
-        localStorage.setItem('access_token', data.access);
-        localStorage.setItem('refresh_token', data.refresh);
+        localStorage.setItem('access', data.access);
+localStorage.setItem('refresh', data.refresh);
+
         localStorage.setItem('username', username); // ✅ Store username
         navigate('/');
       } else {
