@@ -42,6 +42,7 @@ function App() {
         <Route path="/rooms/:id" element={<RoomDetails />} />
         <Route path="/routine/:id" element={<Routine />} />
 
+
         <Route path="/create-room" element={<CreateRoom/>} />
         <Route path="/rooms/delete/:id" element={<DeleteRoom/>} />
         <Route path="/rooms/update/:id" element={<UpdateRoom />} />

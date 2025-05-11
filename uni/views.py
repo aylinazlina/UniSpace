@@ -163,19 +163,10 @@ class BookingViewSet(viewsets.ModelViewSet):
 
 
 class RoomRoutineView(APIView):
-    """API View to get routines for a specific room"""
-
     def get(self, request, room_id):
-        try:
-            room = Rooms.objects.get(id=room_id)
-            routines = Routine.objects.filter(room=room).order_by('day', 'start_time')
-            serializer = RoutineSerializer(routines, many=True)
-            return Response(serializer.data)
-        except Rooms.DoesNotExist:
-            return Response(
-                {"error": "Room not found"},
-                status=status.HTTP_404_NOT_FOUND
-            )
-
+        room = get_object_or_404(Rooms, id=room_id)
+        routines = Routine.objects.filter(room=room)
+        serializer = RoutineSerializer(routines, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 

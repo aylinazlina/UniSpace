@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, Link } from 'react-router-dom';
 import './RoomDetails.css';
 import BookingForm from './BookingForm';
 
@@ -107,8 +106,10 @@ const RoomDetails = () => {
             )}
 
                 <div>
-      {/* Existing room details */}
-      <button onClick={() => navigate(`/routine/${id}`)}>View Routine</button>
+
+
+      <Link to={`/routine/${room.id}`}>View Routine</Link>
+
     </div>
 
           </div>

@@ -1,12 +1,188 @@
-table {
-  border-collapse: collapse;
+/* Routine Page Styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Base styles */
+.routine-page {
+  font-family: 'Poppins', sans-serif;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 30px;
+  background: linear-gradient(145deg, #ffffff, #f5f7fa);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  color: #2d3748;
+}
+
+.routine-page h2 {
+  margin-bottom: 25px;
+  font-weight: 600;
+  color: #2c3e50;
+  text-align: center;
+  font-size: 28px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.routine-page h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  border-radius: 3px;
+}
+
+/* Table styles */
+.routine-table {
   width: 100%;
-  margin-top: 20px;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 25px;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
-th, td {
-  padding: 8px;
-  border: 1px solid #ddd;
+
+.routine-table thead {
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  color: white;
 }
-th {
-  background-color: #f5f5f5;
+
+.routine-table th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.routine-table td {
+  padding: 16px;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.routine-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.routine-table tbody tr:hover {
+  background-color: #f7fafc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Status messages */
+.routine-page p {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 16px;
+  color: #4a5568;
+}
+
+.error-message {
+  background-color: #fff5f5;
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 4px solid #e53e3e;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.error-message p {
+  color: #c53030;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+/* Login button */
+.login-button {
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);
+  font-family: 'Poppins', sans-serif;
+}
+
+.login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(99, 102, 241, 0.3);
+}
+
+.login-button:active {
+  transform: translateY(0);
+}
+
+/* Day of week styling */
+.routine-table td:first-child {
+  font-weight: 600;
+  color: #4a5568;
+}
+
+/* Time columns styling */
+.routine-table td:nth-child(2),
+.routine-table td:nth-child(3) {
+  color: #5a67d8;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+}
+
+/* Subject/Purpose column */
+.routine-table td:last-child {
+  font-weight: 500;
+}
+
+/* Loading animation */
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.routine-page p:contains("Loading") {
+  animation: pulse 1.5s infinite;
+  color: #6366f1;
+  font-weight: 500;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .routine-page {
+    padding: 20px;
+    margin: 20px;
+    border-radius: 12px;
+  }
+  
+  .routine-table th,
+  .routine-table td {
+    padding: 12px 10px;
+    font-size: 14px;
+  }
+  
+  .routine-page h2 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .routine-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .routine-page {
+    padding: 15px;
+    margin: 10px;
+  }
 }

@@ -1,4 +1,3 @@
-// src/axiosInstance.js
 import axios from 'axios';
 
 // Utility to get a cookie by name
@@ -17,26 +16,31 @@ function getCookie(name) {
   return cookieValue;
 }
 
-const baseURL = '/api';
+// Define your API base URL
+const BASE_URL = 'http://localhost:8000'; // Use '' if you're using proxy in Vite
 
 const axiosInstance = axios.create({
-  baseURL,
-  timeout: 5000,
-  withCredentials: true, // 🔑 Required for CSRF
+  baseURL: '',  // Leave empty string to use Vite proxy (you already configured it!)
+  withCredentials: true, // Required for CSRF
   headers: {
-    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     'Content-Type': 'application/json',
     accept: 'application/json',
   },
 });
 
-// Attach CSRF token to all requests
+// Add access token and CSRF token to each request
 axiosInstance.interceptors.request.use(
   (config) => {
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+
     const csrftoken = getCookie('csrftoken');
     if (csrftoken) {
       config.headers['X-CSRFToken'] = csrftoken;
     }
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -48,28 +52,35 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (
-      error.response?.status === 401 &&
-      error.response.data?.code === 'token_not_valid' &&
-      !originalRequest._retry
-    ) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
+
       try {
         const refreshToken = localStorage.getItem('refresh_token');
-        const res = await axios.post('/api/token/refresh/', {
+
+        if (!refreshToken) {
+          console.error('No refresh token available');
+          window.location.href = '/login';
+          return Promise.reject(error);
+        }
+
+        const res = await axios.post(`${BASE_URL}/api/token/refresh/`, {
           refresh: refreshToken,
         });
 
         const newAccessToken = res.data.access;
+
         localStorage.setItem('access_token', newAccessToken);
 
-        // Update header and retry original request
-        axiosInstance.defaults.headers['Authorization'] = `Bearer ${newAccessToken}`;
         originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
 
         return axiosInstance(originalRequest);
-      } catch (err) {
-        console.error('Refresh token failed', err);
+      } catch (refreshError) {
+        console.error('Token refresh failed:', refreshError);
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        window.location.href = '/login';
+        return Promise.reject(refreshError);
       }
     }
 
